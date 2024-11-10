@@ -31,11 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.francoapp.R
+import com.example.francoapp.dominio.SesionManager
 import com.example.francoapp.ui.viewmodel.LoginViewModel
 
 
 @Composable
-fun LoginDesign(viewModel: LoginViewModel, navController:NavController) {
+fun LoginDesign(viewModel: LoginViewModel, navController:NavController, sesionManager: SesionManager) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -138,6 +139,7 @@ fun LoginDesign(viewModel: LoginViewModel, navController:NavController) {
 
                         // Navegar al dashboard si el token es válido
                         if (resultToken != null) {
+                            sesionManager.saveToken(resultToken)
                             navController.navigate("dashboard")
                         }
                     } }

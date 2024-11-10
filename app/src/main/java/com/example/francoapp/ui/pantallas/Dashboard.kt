@@ -25,6 +25,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,12 +40,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.francoapp.R
 import okhttp3.internal.wait
 
 @Preview
 @Composable
-fun Dashboard(){
+fun Dashboard(navController: NavHostController){
+
+    var isNavigating by remember { mutableStateOf(false) }
     Column(
         Modifier
             .fillMaxHeight()
@@ -124,14 +129,20 @@ fun Dashboard(){
                                 .background(
                                     color=Color(android.graphics.Color.parseColor("#ffe0c8")),
                                     shape = RoundedCornerShape(20.dp)
-                                ),
+                                )
+                                .clickable {
+                                    if (!isNavigating) {
+                                        isNavigating = true
+                                        navController.navigate("clientes")
+                                    }
+                                },
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(painter = painterResource(id=R.drawable.video_call),
                                 contentDescription = null,
                                 Modifier.padding(top = 8.dp, bottom = 4.dp)
                             )
-                            Text(text = "Video Call",
+                            Text(text = "Clientes",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
                                 fontStyle = FontStyle.Italic,
@@ -144,10 +155,14 @@ fun Dashboard(){
                                 .padding(top=12.dp, bottom = 12.dp, end = 8.dp, start = 8.dp)
                                 .height(90.dp)
                                 .width(90.dp)
+                                .clickable {
+
+                                }
                                 .background(
                                     color=Color(android.graphics.Color.parseColor("#ffe0c8")),
                                     shape = RoundedCornerShape(20.dp)
-                                ),
+                                )
+                            ,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(painter = painterResource(id=R.drawable.notification),
